@@ -64,20 +64,29 @@ public class ProblemClass {
         }
 
     }//Using recursion
-    public void towerOfHanoi(){
-
+    public void towerOfHanoi(int n , String src, String helper, String dest){
+        if(n==1){
+            System.out.println("transfer disk "+ n +" from " + src+" to "+dest);
+            return;
+        }
+        towerOfHanoi(n-1,src,dest,helper);
+        System.out.println("transfer disk "+ n +" from " + src+" to "+dest);
+        towerOfHanoi(n-1, helper, src, dest);
     }//Using recursion
-    public String reverse(String str){
+    public String reverse(String str,int index){
+
         return "";
     }//Using recursion
     //Find the 1st & last occurrence of an element in string
-    public void findFirstAndLastStringIndex(){
 
+    public void findFirstAndLastStringIndex(String str){
+        
     }
     //Check if an array is sorted (Strictly Increasing)
     // 12345 true
     // 12344 false
-    public boolean isSorted(int[] arr){
+    public boolean isSorted(int[] arr,int size){
+        
         return true;
     }
     //Move all 'x' to the end of the string
@@ -107,8 +116,12 @@ public class ProblemClass {
     public void printKeypadCombination(String str){
 
     }
+    public void recurs(int n){
+    }
     public static void main(String[] args) {
         ProblemClass obj = new ProblemClass();
-        System.out.println(obj.powerOFNEven(2, 4));
+        // obj.towerOfHanoi(3,"S","H","D");
+        // obj.towerOfHanoi(2,"S","H","D");
+        // obj.towerOfHanoi(1,"S","H","D");
     }
 }
