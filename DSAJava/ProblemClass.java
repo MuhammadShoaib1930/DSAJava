@@ -1,4 +1,7 @@
 package DSAJava;
+
+import java.util.HashSet;
+
 /**
  * ProblemClass
  */
@@ -73,53 +76,131 @@ public class ProblemClass {
         System.out.println("transfer disk "+ n +" from " + src+" to "+dest);
         towerOfHanoi(n-1, helper, src, dest);
     }//Using recursion
-    public String reverse(String str,int index){
-
-        return "";
+    public void  reverse(String str,int index){
+        if(index == 0){
+            System.out.print(str.charAt(index));
+            return;
+        }
+        System.out.print(str.charAt(index));
+        reverse(str, index-1);
     }//Using recursion
     //Find the 1st & last occurrence of an element in string
-
-    public void findFirstAndLastStringIndex(String str){
-        
+    public int first = -1;
+    public int last = -1;
+    public void findFirstAndLastStringIndex(String str,int index, char element){
+        if(index == str.length()){
+            System.out.println(first+" "+last);
+            return;
+        }
+        char currChar = str.charAt(index);
+        if(currChar == element){
+            if(first ==-1){
+                first = index;
+            }else{
+                last = index;
+            }
+        }
+        findFirstAndLastStringIndex(str, index+1, element);
     }
     //Check if an array is sorted (Strictly Increasing)
     // 12345 true
     // 12344 false
-    public boolean isSorted(int[] arr,int size){
-        
-        return true;
+    public boolean isSorted(int[] arr,int index){
+        if(index == arr.length-1){
+            return true;
+        }
+        if(arr[index]<arr[index+1]){
+            return isSorted(arr, index+1);
+        }else{
+            return false;
+        }
     }
     //Move all 'x' to the end of the string
-    public void movingXToEnd(String str){
-
+    public void movingXToEnd(String str, int index, int count, String newString){
+        if(index == str.length()){
+            for(int i= 0; i<count;i++){
+                newString+='x';
+            }
+            System.out.println(newString);
+            return;
+        }
+        char currChar= str.charAt(index);
+        if(currChar=='x'){
+            count++;
+            movingXToEnd(str, index+1, count, newString);
+        }else{
+            newString += currChar;
+            movingXToEnd(str, index+1, count, newString);
+        }
     }
     //Remove duplicates in a string
-    public String removingDuplicatesChar(String str){
-        return "";
+    public static boolean[] map=new boolean[26];
+    public void removingDuplicatesChar(String str,int index,String newString){
+        if(index == str.length()){
+            System.out.println(newString);
+            return;
+        }
+        char currChar = str.charAt(index);
+        if(map[currChar-'a']==true){
+            removingDuplicatesChar(str, index+1, newString);
+        }else{
+            newString +=currChar;
+            map[currChar-'a']= true;
+            removingDuplicatesChar(str, index+1, newString);
+        }
     }
     //Print all the subsequences of a string 
     // subsequences means take any character but the order will same 
     // like abcde --> ace , ab,bc,de,abe
-    public void printingSubsequences(String str){
+    public void printingSubsequences(String str,int index, String newString){
+        if(index == str.length()){
+            System.out.println(newString);
+            return;
+        }
+        char currChar = str.charAt(index);
+        printingSubsequences(str, index+1, newString+currChar);
+        printingSubsequences(str, index+1, newString);
     }
     /*Print all the unique subsequences of a string
     using set
     HashSet<String> set = new HashSet<>();
     */
-    public void printingUniqueSubsequences(String str){
+    public void printingUniqueSubsequences(String str,int index,String newString,HashSet<String> set){
 
+        if(index == str.length()){
+            if(set.contains(newString)){
+                return;
+            }else{
+                System.out.println(newString);
+                set.add(newString);
+                return;
+            }
+        }
+        char currChar = str.charAt(index);
+        printingUniqueSubsequences(str, index+1, newString+currChar,set);
+        printingUniqueSubsequences(str, index+1, newString,set);
+        
     }
     /*
      * Print keypad combination
      * the old mobile keypad like 
      */
-    public void printKeypadCombination(String str){
-
-    }
-    public void recurs(int n){
+    public static String[]  keypad={".","abc","def","ghi","jkl","mno","pqrs","tu","vwx","yz"};
+    public void printKeypadCombination(String str,int index,String combination){
+        if(index == str.length()){
+            System.out.println(combination);
+            return;
+        }
+        char currChar = str.charAt(index);
+        String mapping = keypad[currChar-'0'];
+        for(int i = 0; i<mapping.length();i++){
+            printKeypadCombination(str, index+1, combination+mapping.charAt(i));
+        }
     }
     public static void main(String[] args) {
         ProblemClass obj = new ProblemClass();
+        HashSet<String> set = new HashSet<>();
+        obj.printKeypadCombination("23", 0, "");
         // obj.towerOfHanoi(3,"S","H","D");
         // obj.towerOfHanoi(2,"S","H","D");
         // obj.towerOfHanoi(1,"S","H","D");
