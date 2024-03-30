@@ -197,10 +197,46 @@ public class ProblemClass {
             printKeypadCombination(str, index+1, combination+mapping.charAt(i));
         }
     }
+    public void indexOfFirstAndLast(String str,int index, char element){
+        if(index == str.length()|| str.charAt(index)==element){
+            System.out.println(index+" "+(str.length()-1));
+            return;
+        }
+        indexOfFirstAndLast(str, index+1, element);
+    }
+    public void yend(String str, int index, String newStr, int count){
+        if(index == str.length()){
+            for(int i= 0 ;i < count;i++){
+                newStr = newStr+'x';
+            }
+            System.out.println(newStr);
+            return;
+        }
+        if(str.charAt(index)=='x'){
+            count=count+1;
+        }else{
+            newStr = newStr+str.charAt(index);
+        }
+        yend(str, index+1, newStr, count);
+    }
+    // Print all Permutations of a String 
+    // all possible combination of letters
+    // example of abc -> abc , acb ,bac , bca,cab,cab
+    public void permutationsString(String str,String permutation){
+        if(str.length()==0){
+            System.out.println(permutation);
+            return;
+        }
+        for(int i = 0; i<str.length();i++){
+            char currChar = str.charAt(i);
+            String newStr= str.substring(0, i)+str.substring(i+1);
+            permutationsString(newStr,permutation+currChar );
+        }
+    }
     public static void main(String[] args) {
         ProblemClass obj = new ProblemClass();
         HashSet<String> set = new HashSet<>();
-        obj.printKeypadCombination("23", 0, "");
+        obj.permutationsString("abc","");
         // obj.towerOfHanoi(3,"S","H","D");
         // obj.towerOfHanoi(2,"S","H","D");
         // obj.towerOfHanoi(1,"S","H","D");
