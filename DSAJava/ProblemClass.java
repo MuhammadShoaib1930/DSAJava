@@ -204,7 +204,7 @@ public class ProblemClass {
         }
         indexOfFirstAndLast(str, index+1, element);
     }
-    public void yend(String str, int index, String newStr, int count){
+    public void indexOFFAndL(String str, int index, String newStr, int count){
         if(index == str.length()){
             for(int i= 0 ;i < count;i++){
                 newStr = newStr+'x';
@@ -217,7 +217,7 @@ public class ProblemClass {
         }else{
             newStr = newStr+str.charAt(index);
         }
-        yend(str, index+1, newStr, count);
+        indexOFFAndL(str, index+1, newStr, count);
     }
     // Print all Permutations of a String 
     // all possible combination of letters
@@ -233,10 +233,45 @@ public class ProblemClass {
             permutationsString(newStr,permutation+currChar );
         }
     }
+    //Count total paths in a maze to move from (0,0) to (n,m)
+    public int countPath(int i , int j , int n, int m){
+        if(i ==n || j==m){
+            return 0;
+        }
+        if(i==n-1 && j == m-1){
+            return 1;
+        }
+        int downPath = countPath(i+1, j, n, m);
+        int rightPath = countPath(i, j+1, n, m);
+        return downPath+rightPath;
+    }
+    public void backTracing(String str,int index , char ch,boolean isTrue){
+        if(index == str.length()){
+            return;
+        }
+        char currChar = str.charAt(index);
+        System.out.print(currChar+" ");
+        if(currChar == ch && isTrue == false){
+            backTracing(str, 0, ch, true);
+        }
+        backTracing(str, index+1, ch, isTrue);
+    }
+    public int gCD(int a, int b){
+        if(a==0){
+            return b;
+        }if(b == 0){
+            return a;
+        }
+        if(a<b){
+            return gCD(a, b-a);
+        }else{
+            return gCD(a-b, b);
+        }
+    }
     public static void main(String[] args) {
         ProblemClass obj = new ProblemClass();
         HashSet<String> set = new HashSet<>();
-        obj.permutationsString("abc","");
+        System.out.println(obj.gCD(20, 10));
         // obj.towerOfHanoi(3,"S","H","D");
         // obj.towerOfHanoi(2,"S","H","D");
         // obj.towerOfHanoi(1,"S","H","D");
