@@ -1,6 +1,8 @@
 package DSAJava;
 
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.Scanner;
 
 /**
  * ProblemClass
@@ -268,10 +270,45 @@ public class ProblemClass {
             return gCD(a-b, b);
         }
     }
+    private void conquerMarge(int[] arr, int st, int mid, int ed) {
+        int ind1 = st;
+        int ind2 = mid+1;
+        int x = 0;
+        int tempArr[]=new int[ed];
+        while (ind1<=mid && ind2<=ed) {
+            if(arr[ind1]<=arr[ind2]){
+                tempArr[x++] =arr[ind1++];
+            }else{
+                tempArr[x++]=arr[ind2++];
+            }
+        }
+        while (ind1<=mid) {
+            tempArr[x++] = arr[ind1++];
+        }
+        while (ind2<=ed) {
+            tempArr[x++] = arr[ind2++];
+        }
+        for(int i=0 , j=st;i<tempArr.length ;i++,j++){
+            arr[j]=tempArr[i];
+        }
+    }
+    public void divideMarge(int arr[],int st , int ed){
+        if(st>=ed){
+            return;
+        }
+        int mid = st+(ed-st)/2;
+        divideMarge(arr, st, mid);
+        divideMarge(arr, mid+1, ed);
+        conquerMarge(arr,st,mid,ed);
+    }
     public static void main(String[] args) {
         ProblemClass obj = new ProblemClass();
         HashSet<String> set = new HashSet<>();
-        System.out.println(obj.gCD(20, 10));
+        int[] arr= {9,8,7,6,5,4,3,2,1};
+        obj.divideMarge(arr, 0, arr.length-1);
+        for(int i = 0;i<arr.length;i++){
+            System.out.print(arr[i]+" ");
+        }
         // obj.towerOfHanoi(3,"S","H","D");
         // obj.towerOfHanoi(2,"S","H","D");
         // obj.towerOfHanoi(1,"S","H","D");
